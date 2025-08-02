@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Enrollment Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <center>
+        <h1>STUDENT FORM</h1>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Name</th>
+                <td><input id="NameInput" type="text" placeholder="Enter the Name"></td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td><input id="AgeInput" type="number" placeholder="Enter the Age"></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>
+                    <label><input type="radio" name="gender" value="Male">Male</label>
+                    <label><input type="radio" name="gender" value="Female">Female</label>
+                </td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>
+                    <input list="departments" id="DepartmentInput" placeholder="Choose or type...">
+                    <datalist id="departments">
+                        <option value="AI & DS">
+                        <option value="CSE">
+                        <option value="IT">
+                        <option value="ECE">
+                        <option value="EEE">
+                        <option value="CSC(CY)">
+                    </datalist>
+                </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="text" id="EmailInput" placeholder="Enter the E-mail"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button onclick="save()">Save</button>
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <br>
+
+    <center>
+        <h3>Saved Student Details</h3>
+        <table id="datalist" border="1" cellpadding="10">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </table>
+    </center>
+
+    <script>
+        function save() {
+    const Name = document.getElementById("NameInput").value.trim();
+    const Age = document.getElementById("AgeInput").value.trim();
+    const Department = document.getElementById("DepartmentInput").value.trim();
+    const Email = document.getElementById("EmailInput").value.trim();
+
+    // Gender
+    const genderRadios = document.getElementsByName("gender");
+    let Gender = "";
+    for (const radio of genderRadios) {
+        if (radio.checked) {
+            Gender = radio.value;
+            break;
+        }
+    }
+
+   
+    if (!Name || !Age || !Gender || !Department || !Email) {
+        alert("Please fill all fields before saving.");
+        return;
+    }
+
+    alert("Saved Successfully");
+
+    
+    const table = document.getElementById("datalist");
+    const row = table.insertRow(-1);
+    row.insertCell(0).innerText = Name;
+    row.insertCell(1).innerText = Age;
+    row.insertCell(2).innerText = Gender;
+    row.insertCell(3).innerText = Department;
+    row.insertCell(4).innerText = Email;
+
+    const actionCell = row.insertCell(5);
+    const delBtn = document.createElement("button");
+    delBtn.innerText = "Delete";
+    delBtn.onclick = function () {
+        table.deleteRow(row.rowIndex);
+    };
+    actionCell.appendChild(delBtn);
+
+   
+    document.getElementById("NameInput").value = "";
+    document.getElementById("AgeInput").value = "";
+    document.getElementById("DepartmentInput").value = "";
+    document.getElementById("EmailInput").value = "";
+    for (const radio of genderRadios) radio.checked = false;
+}
+
+    </script>
+</body>
+</html>
